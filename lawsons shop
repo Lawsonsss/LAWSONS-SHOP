@@ -1,1 +1,57 @@
 # descriptin
+
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+
+const products = [
+  { id: 1, name: "Smartphone", price: 699, image: "/mnt/data/Screenshot (1).png" },
+  { id: 2, name: "Laptop", price: 999, image: "https://via.placeholder.com/150" },
+  { id: 3, name: "Headphones", price: 199, image: "https://via.placeholder.com/150" },
+  { id: 4, name: "Desktop", price: 1200, image: "https://via.placeholder.com/150" },
+  { id: 5, name: "Small Phone", price: 299, image: "https://via.placeholder.com/150" },
+  { id: 6, name: "Tablet", price: 499, image: "https://via.placeholder.com/150" },
+  { id: 7, name: "EarPods", price: 149, image: "https://via.placeholder.com/150" },
+  { id: 8, name: "Phone Cover", price: 29, image: "https://via.placeholder.com/150" },
+  { id: 9, name: "Laptop Bag", price: 59, image: "https://via.placeholder.com/150" },
+  { id: 10, name: "Wireless Mouse", price: 39, image: "https://via.placeholder.com/150" },
+];
+
+export default function Shop() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  return (
+    <div className="p-6 bg-blue-600 min-h-screen text-yellow-400">
+      <h1 className="text-3xl font-bold mb-4">LAWSONS</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <Card key={product.id} className="p-4 shadow-lg rounded-lg bg-blue-700">
+            <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-md" />
+            <CardContent>
+              <h2 className="text-xl font-semibold text-yellow-300">{product.name}</h2>
+              <p className="text-yellow-200">${product.price}</p>
+              <Button className="mt-2 bg-yellow-400 text-blue-700" onClick={() => addToCart(product)}>Add to Cart</Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <div className="mt-6 p-4 bg-blue-700 rounded-lg">
+        <h2 className="text-2xl font-semibold">Cart <ShoppingCart className="inline w-6 h-6" /></h2>
+        {cart.length > 0 ? (
+          <ul>
+            {cart.map((item, index) => (
+              <li key={index} className="text-lg">{item.name} - ${item.price}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-yellow-300">Your cart is empty</p>
+        )}
+      </div>
+    </div>
+  );
+}
